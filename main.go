@@ -5,19 +5,24 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/DevOps-Group-D/YouToFy-API/configs"
 	"github.com/go-chi/chi"
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	// Read .env variables
+	// Reading .env variables
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 
+	// Initializing configs
+	cfg := configs.NewConfig()
+
+	// Lisstenning and serving service
 	router := chi.NewRouter()
 
-	fmt.Println("Listening and serving on localhost:3333")
-	http.ListenAndServe(":3333", router)
+	fmt.Println("Listening and serving on port", cfg.ApiConfig.Port)
+	http.ListenAndServe(fmt.Sprintf(":%s", cfg.ApiConfig.Port), router)
 }
