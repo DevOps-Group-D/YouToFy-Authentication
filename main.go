@@ -20,7 +20,7 @@ func main() {
 	// Initializing configs
 	cfg := configs.NewConfig()
 
-	// Lisstenning and serving service
+	// Listenning and serving service
 	router := chi.NewRouter()
 
 	fmt.Println("Listening and serving on port", cfg.ApiConfig.Port)
