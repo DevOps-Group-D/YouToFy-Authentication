@@ -18,7 +18,7 @@ func main() {
 	}
 
 	// Initializing configs
-	cfg := configs.NewConfig()
+	cfg := configs.LoadConfig()
 
 	// Listening and serving service
 	router := chi.NewRouter()

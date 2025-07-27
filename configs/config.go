@@ -14,23 +14,37 @@ type ApiConfig struct {
 	Port string
 }
 
-func NewConfig() *config {
-	viper.SetDefault("api.port", 3333)
+var Cfg *config
 
+func init() {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
+}
+
+func LoadConfig() *config {
+	if Cfg != nil {
+		fmt.Println("Error loading config: Config already loaded")
+		return Cfg
+	}
+
+	setDefaultValues()
 
 	err := viper.ReadInConfig()
 	if err != nil {
 		fmt.Println("Error reading config file, using default values:", err)
 	}
 
-	cfg := &config{
+	Cfg = &config{
 		ApiConfig: &ApiConfig{
 			Port: viper.GetString("api.port"),
 		},
 	}
 
-	return cfg
+	return Cfg
+}
+
+func setDefaultValues() {
+	// API Config
+	viper.SetDefault("api.port", 3333)
 }
