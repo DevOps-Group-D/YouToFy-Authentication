@@ -12,7 +12,6 @@ func Connect() (*sql.DB, error) {
 	cfg := configs.Cfg
 
 	sc := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s", cfg.DBConfig.Host, cfg.DBConfig.Port, cfg.DBConfig.User, cfg.DBConfig.Password, cfg.DBConfig.Name, cfg.DBConfig.SslMode)
-	fmt.Println(sc)
 
 	conn, err := sql.Open("postgres", sc)
 	if err != nil {
