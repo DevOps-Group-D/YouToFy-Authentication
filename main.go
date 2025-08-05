@@ -26,6 +26,8 @@ func main() {
 
 	// Registering controllers
 	router.Put("/register", controllersAcc.Register)
+	router.Post("/login", controllersAcc.Login)
+	router.Get("/authorize", controllersAcc.Authorize)
 
 	fmt.Println("Listening and serving on port", cfg.ApiConfig.Port)
 	http.ListenAndServe(fmt.Sprintf(":%s", cfg.ApiConfig.Port), router)
