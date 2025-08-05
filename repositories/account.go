@@ -2,29 +2,62 @@ package repositoriesAcc
 
 import (
 	"github.com/DevOps-Group-D/YouToFy-API/database"
-	"github.com/google/uuid"
+	"github.com/DevOps-Group-D/YouToFy-API/models"
 )
 
 const (
-	REGISTER_QUERY = `INSERT INTO account (id, username, password) VALUES ($1, $2, $3) RETURNING id`
+	INSERT_QUERY = `INSERT INTO account (username, password) VALUES ($1, $2)`
+	SELECT_QUERY = `SELECT * FROM account WHERE username = $1`
+	UPDATE_QUERY = `UPDATE account SET password = $2, session_token = $3, csrf_token = $4 WHERE username = $1`
 )
 
-func Register(username string, password string) (uuid.UUID, error) {
+func Insert(username string, password string) error {
 	conn, err := database.Connect()
 	if err != nil {
-		return uuid.Nil, err
+		return err
 	}
 	defer conn.Close()
 
-	id, err := uuid.NewUUID()
-	if err != nil {
-		return uuid.Nil, err
-	}
-
-	row := conn.QueryRow(REGISTER_QUERY, id, username, password)
+	row := conn.QueryRow(INSERT_QUERY, username, password)
 	if row.Err() != nil {
-		return uuid.Nil, row.Err()
+		return row.Err()
 	}
 
-	return id, nil
+	return nil
+}
+
+func Get(username string) (*models.Account, error) {
+	conn, err := database.Connect()
+	if err != nil {
+		return nil, err
+	}
+	defer conn.Close()
+
+	row := conn.QueryRow(SELECT_QUERY, username)
+	if row.Err() != nil {
+		return nil, row.Err()
+	}
+
+	account := &models.Account{}
+	err = row.Scan(&account.Username, &account.Password, &account.SessionToken, &account.CsrfToken)
+	if err != nil {
+		return nil, err
+	}
+
+	return account, nil
+}
+
+func Update(account *models.Account) error {
+	conn, err := database.Connect()
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+
+	row := conn.QueryRow(UPDATE_QUERY, account.Username, account.Password, account.SessionToken.String, account.CsrfToken.String)
+	if row.Err() != nil {
+		return row.Err()
+	}
+
+	return nil
 }
