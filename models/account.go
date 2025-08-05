@@ -1,11 +1,10 @@
 package models
 
-import "github.com/google/uuid"
+import "database/sql"
 
 type Account struct {
-	Id           uuid.UUID `json:"id"`
-	Username     string    `json:"username"`
-	Password     string    `json:"password"`
-	SessionToken string    `json:"session_token"`
-	CsrfToken    uuid.UUID `json:"csrf_token"`
+	Username     string         `json:"username"`
+	Password     string         `json:"password"`
+	SessionToken sql.NullString `json:"session_token"`
+	CsrfToken    sql.NullString `json:"csrf_token"`
 }
