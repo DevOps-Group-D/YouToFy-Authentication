@@ -70,6 +70,6 @@ func setDefaultValues() {
 	// DB Config
 	viper.SetDefault("database.host", "localhost")
 	viper.SetDefault("database.port", "5432")
-	viper.SetDefault("database.name", "api_youtofy")
+	viper.SetDefault("database.name", "youtofy")
 	viper.SetDefault("database.sslmode", "disable")
 }
