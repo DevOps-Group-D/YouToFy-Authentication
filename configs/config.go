@@ -23,7 +23,7 @@ type DBConfig struct {
 	Password string
 	Name     string
 	SslMode  string
-	URL      string
+	Url      string
 }
 
 var Cfg *config
@@ -56,7 +56,7 @@ func LoadConfig() *config {
 		SslMode:  viper.GetString("database.sslmode"),
 	}
 
-	dbConfig.URL = fmt.Sprintf(
+	dbConfig.Url = fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s?sslmode=%s",
 		dbConfig.User,
 		dbConfig.Password,
