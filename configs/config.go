@@ -53,8 +53,8 @@ func LoadConfig() *config {
 		DBConfig: &DBConfig{
 			Host:     viper.GetString("database.host"),
 			Port:     viper.GetString("database.port"),
-			User:     os.Getenv("DB_USER"),
-			Password: os.Getenv("DB_PASSWORD"),
+			User:     os.Getenv("POSTGRES_USER"),
+			Password: os.Getenv("POSTGRES_PASSWORD"),
 			Name:     viper.GetString("database.name"),
 			SslMode:  viper.GetString("database.sslmode"),
 		},
@@ -68,7 +68,7 @@ func setDefaultValues() {
 	viper.SetDefault("api.port", 3333)
 
 	// DB Config
-	viper.SetDefault("database.host", "localhost")
+	viper.SetDefault("database.host", "postgres")
 	viper.SetDefault("database.port", "5432")
 	viper.SetDefault("database.name", "youtofy")
 	viper.SetDefault("database.sslmode", "disable")
