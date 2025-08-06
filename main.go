@@ -7,8 +7,8 @@ import (
 
 	"github.com/DevOps-Group-D/YouToFy-API/configs"
 	controllersAcc "github.com/DevOps-Group-D/YouToFy-API/controllers"
+	"github.com/DevOps-Group-D/YouToFy-API/database"
 	"github.com/go-chi/chi"
-	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/joho/godotenv"
@@ -26,7 +26,7 @@ func main() {
 
 	// Running migrations
 	migrationsPath := "file://./migrations"
-	runMigrations(migrationsPath, cfg.DBConfig.Url)
+	database.RunMigrations(migrationsPath, cfg.DBConfig.Url)
 
 	// Listening and serving service
 	router := chi.NewRouter()
@@ -38,23 +38,4 @@ func main() {
 
 	fmt.Println("Listening and serving on port", cfg.ApiConfig.Port)
 	http.ListenAndServe(fmt.Sprintf(":%s", cfg.ApiConfig.Port), router)
-}
-
-func runMigrations(migrationsPath, databaseURL string) {
-	log.Println("Running database migrations...")
-
-	m, err := migrate.New(
-		migrationsPath,
-		databaseURL,
-	)
-	if err != nil {
-		log.Fatalf("Failed to create migrate instance: %v", err)
-	}
-	defer m.Close()
-
-	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
-		log.Fatalf("Failed to run migrations: %v", err)
-	}
-
-	log.Println("Database is up to date!")
 }
