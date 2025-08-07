@@ -1,4 +1,4 @@
-package repositoriesAcc
+package repositories
 
 import (
 	"github.com/DevOps-Group-D/YouToFy-API/database"

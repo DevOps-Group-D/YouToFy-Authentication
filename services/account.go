@@ -1,4 +1,4 @@
-package servicesAcc
+package services
 
 import (
 	"database/sql"
@@ -6,7 +6,7 @@ import (
 
 	"github.com/DevOps-Group-D/YouToFy-API/errors"
 	"github.com/DevOps-Group-D/YouToFy-API/models"
-	repositoriesAcc "github.com/DevOps-Group-D/YouToFy-API/repositories"
+	"github.com/DevOps-Group-D/YouToFy-API/repositories"
 	"github.com/DevOps-Group-D/YouToFy-API/utils"
 )
 
@@ -16,11 +16,11 @@ func Register(username string, password string) error {
 		return err
 	}
 
-	return repositoriesAcc.Insert(username, hashedPassword)
+	return repositories.Insert(username, hashedPassword)
 }
 
 func Login(username string, password string) (*models.Account, error) {
-	account, err := repositoriesAcc.Get(username)
+	account, err := repositories.Get(username)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func Login(username string, password string) (*models.Account, error) {
 	account.SessionToken = sql.NullString{String: sessionToken}
 	account.CsrfToken = sql.NullString{String: csrfToken}
 
-	err = repositoriesAcc.Update(account)
+	err = repositories.Update(account)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func Authorize(username string, sessionToken string, csrfToken string) error {
 		return &errors.UnauthorizedError{}
 	}
 
-	account, err := repositoriesAcc.Get(username)
+	account, err := repositories.Get(username)
 	if err != nil {
 		return err
 	}
