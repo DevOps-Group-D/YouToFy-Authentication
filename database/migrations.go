@@ -6,11 +6,13 @@ import (
 	"github.com/golang-migrate/migrate/v4"
 )
 
-func RunMigrations(migrationsPath, databaseURL string) {
+const MIGRATIONS_PATH = "file://./migrations"
+
+func RunMigrations(databaseURL string) {
 	log.Println("Running database migrations...")
 
 	m, err := migrate.New(
-		migrationsPath,
+		MIGRATIONS_PATH,
 		databaseURL,
 	)
 	if err != nil {

@@ -25,8 +25,7 @@ func main() {
 	cfg := configs.LoadConfig()
 
 	// Running migrations
-	migrationsPath := "file://./migrations"
-	database.RunMigrations(migrationsPath, cfg.DBConfig.Url)
+	database.RunMigrations(cfg.DBConfig.Url)
 
 	// Listening and serving service
 	router := chi.NewRouter()
