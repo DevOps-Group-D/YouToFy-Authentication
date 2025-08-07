@@ -4,10 +4,10 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/DevOps-Group-D/YouToFy-API/errors"
-	"github.com/DevOps-Group-D/YouToFy-API/models"
-	"github.com/DevOps-Group-D/YouToFy-API/repositories"
-	"github.com/DevOps-Group-D/YouToFy-API/utils"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/errors"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/models"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/repositories"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/utils"
 )
 
 func Register(username string, password string) error {

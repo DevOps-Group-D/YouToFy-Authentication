@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/DevOps-Group-D/YouToFy-API/configs"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/configs"
 	_ "github.com/lib/pq"
 )
 

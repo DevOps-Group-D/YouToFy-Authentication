@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/DevOps-Group-D/YouToFy-API/models"
-	"github.com/DevOps-Group-D/YouToFy-API/services"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/models"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/services"
 )
 
 const TOKEN_EXPIRATION_HOURS = 24

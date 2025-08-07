@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/DevOps-Group-D/YouToFy-API/configs"
-	"github.com/DevOps-Group-D/YouToFy-API/controllers"
-	"github.com/DevOps-Group-D/YouToFy-API/database"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/configs"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/controllers"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/database"
 	"github.com/go-chi/chi"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
