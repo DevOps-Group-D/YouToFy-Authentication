@@ -1,8 +1,8 @@
-package repositoriesAcc
+package repositories
 
 import (
-	"github.com/DevOps-Group-D/YouToFy-API/database"
-	"github.com/DevOps-Group-D/YouToFy-API/models"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/database"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/models"
 )
 
 const (

@@ -1,4 +1,4 @@
-package controllersAcc
+package controllers
 
 import (
 	"encoding/json"
@@ -6,13 +6,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/DevOps-Group-D/YouToFy-API/models"
-	servicesAcc "github.com/DevOps-Group-D/YouToFy-API/services"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/models"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/services"
 )
 
-const (
-	TOKEN_EXPIRATION_HOURS = 24
-)
+const TOKEN_EXPIRATION_HOURS = 24
 
 func Register(w http.ResponseWriter, r *http.Request) {
 	var account models.Account
@@ -25,7 +23,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = servicesAcc.Register(account.Username, account.Password)
+	err = services.Register(account.Username, account.Password)
 	if err != nil {
 		errMsg := fmt.Sprintf("Error registering account: %s", err.Error())
 		http.Error(w, errMsg, http.StatusBadRequest)
@@ -48,7 +46,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	account, err := servicesAcc.Login(reqAccount.Username, reqAccount.Password)
+	account, err := services.Login(reqAccount.Username, reqAccount.Password)
 	if err != nil {
 		errMsg := fmt.Sprintf("Error on account login: %s", err.Error())
 		http.Error(w, errMsg, http.StatusUnauthorized)
@@ -95,7 +93,7 @@ func Authorize(w http.ResponseWriter, r *http.Request) {
 
 	csrfToken := r.Header.Get("X-CSRF-Token")
 
-	err = servicesAcc.Authorize(reqAccount.Username, sessionToken.Value, csrfToken)
+	err = services.Authorize(reqAccount.Username, sessionToken.Value, csrfToken)
 	if err != nil {
 		errMsg := fmt.Sprintf("Unauthorized: %s", err.Error())
 		http.Error(w, errMsg, http.StatusUnauthorized)

@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/DevOps-Group-D/YouToFy-API/configs"
-	controllersAcc "github.com/DevOps-Group-D/YouToFy-API/controllers"
-	"github.com/DevOps-Group-D/YouToFy-API/database"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/configs"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/controllers"
+	"github.com/DevOps-Group-D/YouToFy-Authentication/database"
 	"github.com/go-chi/chi"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -31,9 +31,9 @@ func main() {
 	router := chi.NewRouter()
 
 	// Registering controllers
-	router.Put("/register", controllersAcc.Register)
-	router.Post("/login", controllersAcc.Login)
-	router.Get("/authorize", controllersAcc.Authorize)
+	router.Put("/register", controllers.Register)
+	router.Post("/login", controllers.Login)
+	router.Get("/authorize", controllers.Authorize)
 
 	fmt.Println("Listening and serving on port", cfg.ApiConfig.Port)
 	http.ListenAndServe(fmt.Sprintf(":%s", cfg.ApiConfig.Port), router)

@@ -1,4 +1,4 @@
-module github.com/DevOps-Group-D/YouToFy-API
+module github.com/DevOps-Group-D/YouToFy-Authentication
 
 go 1.24.5
 
