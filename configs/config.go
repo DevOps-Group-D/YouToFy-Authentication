@@ -23,6 +23,7 @@ type DBConfig struct {
 	Password string
 	Name     string
 	SslMode  string
+	Url      string
 }
 
 var Cfg *config
@@ -46,18 +47,30 @@ func LoadConfig() *config {
 		fmt.Println("Error reading config file, using default values:", err)
 	}
 
+	dbConfig := &DBConfig{
+		Host:     viper.GetString("database.host"),
+		Port:     viper.GetString("database.port"),
+		User:     os.Getenv("POSTGRES_USER"),
+		Password: os.Getenv("POSTGRES_PASSWORD"),
+		Name:     viper.GetString("database.name"),
+		SslMode:  viper.GetString("database.sslmode"),
+	}
+
+	dbConfig.Url = fmt.Sprintf(
+		"postgres://%s:%s@%s:%s/%s?sslmode=%s",
+		dbConfig.User,
+		dbConfig.Password,
+		dbConfig.Host,
+		dbConfig.Port,
+		dbConfig.Name,
+		dbConfig.SslMode,
+	)
+
 	Cfg = &config{
 		ApiConfig: &ApiConfig{
 			Port: viper.GetString("api.port"),
 		},
-		DBConfig: &DBConfig{
-			Host:     viper.GetString("database.host"),
-			Port:     viper.GetString("database.port"),
-			User:     os.Getenv("POSTGRES_USER"),
-			Password: os.Getenv("POSTGRES_PASSWORD"),
-			Name:     viper.GetString("database.name"),
-			SslMode:  viper.GetString("database.sslmode"),
-		},
+		DBConfig: dbConfig,
 	}
 
 	return Cfg

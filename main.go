@@ -7,7 +7,10 @@ import (
 
 	"github.com/DevOps-Group-D/YouToFy-API/configs"
 	controllersAcc "github.com/DevOps-Group-D/YouToFy-API/controllers"
+	"github.com/DevOps-Group-D/YouToFy-API/database"
 	"github.com/go-chi/chi"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/joho/godotenv"
 )
 
@@ -20,6 +23,9 @@ func main() {
 
 	// Initializing configs
 	cfg := configs.LoadConfig()
+
+	// Running migrations
+	database.RunMigrations(cfg.DBConfig.Url)
 
 	// Listening and serving service
 	router := chi.NewRouter()
