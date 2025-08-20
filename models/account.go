@@ -7,4 +7,9 @@ type Account struct {
 	Password     string         `json:"password"`
 	SessionToken sql.NullString `json:"session_token"`
 	CsrfToken    sql.NullString `json:"csrf_token"`
+	Spotify      *Spotify       `json:"spotify"`
+}
+
+type Spotify struct {
+	AccessToken string `json:"access_token"`
 }
