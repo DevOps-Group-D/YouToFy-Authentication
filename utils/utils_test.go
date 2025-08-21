@@ -87,3 +87,21 @@ func TestToken(t *testing.T) {
 		t.Error("expected tokens to be unique")
 	}
 }
+
+func TestTokenWithZeroLength(t *testing.T) {
+	token, err := GenerateToken(0)
+	if err != nil {
+		t.Errorf("expected no error, got %v", err)
+	}
+	if token != "" {
+		t.Error("expected token to be empty for zero length")
+	}
+}
+
+func TestTokenWithNegativeLength(t *testing.T) {
+	_, err := GenerateToken(-1)
+	if err == nil {
+		t.Error("expected error when checking negative sized token, got nil")
+	}
+
+}
