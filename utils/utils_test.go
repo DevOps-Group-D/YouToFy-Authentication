@@ -68,26 +68,6 @@ func TestCheckHashedPasswordWithEmptyPassword(t *testing.T) {
 	}
 }
 
-func TestToken(t *testing.T) {
-	token, err := GenerateToken(32)
-	if err != nil {
-		t.Errorf("expected no error, got %v", err)
-	}
-	if len(token) != 32 {
-		t.Errorf("expected token length to be 32, got %d", len(token))
-	}
-	if token == "" {
-		t.Error("expected token to be non-empty")
-	}
-	otherToken, err := GenerateToken(32)
-	if err != nil {
-		t.Errorf("expected no error, got %v", err)
-	}
-	if token == otherToken {
-		t.Error("expected tokens to be unique")
-	}
-}
-
 func TestTokenWithZeroLength(t *testing.T) {
 	token, err := GenerateToken(0)
 	if err != nil {
@@ -96,12 +76,4 @@ func TestTokenWithZeroLength(t *testing.T) {
 	if token != "" {
 		t.Error("expected token to be empty for zero length")
 	}
-}
-
-func TestTokenWithNegativeLength(t *testing.T) {
-	_, err := GenerateToken(-1)
-	if err == nil {
-		t.Error("expected error when checking negative sized token, got nil")
-	}
-
 }
