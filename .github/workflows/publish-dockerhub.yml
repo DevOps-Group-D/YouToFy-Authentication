@@ -1,11 +1,11 @@
-name: Dockerhub
+name: Publish to Dockerhub
 
 on:
   release:
     types: [published]
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,11 +15,6 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag youtofy-authentication:${{ github.event.release.name }}
 
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
     - name: Login to Docker Hub
       run: docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
 
