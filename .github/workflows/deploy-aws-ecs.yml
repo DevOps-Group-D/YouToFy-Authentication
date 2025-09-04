@@ -2,7 +2,7 @@ name: Deploy to AWS EC2
 
 on:
   workflow_run:
-    workflows: [Build]
+    workflows: [Build and Publish to Dockerhub]
     types: [completed]
 
 env:
