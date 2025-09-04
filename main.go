@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/DevOps-Group-D/YouToFy-Authentication/configs"
@@ -18,7 +17,7 @@ func main() {
 	// Reading .env variables
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
+		fmt.Printf("Error loading .env file: %v\n", err)
 	}
 
 	// Initializing configs
@@ -33,7 +32,7 @@ func main() {
 	// Registering controllers
 	router.Put("/register", controllers.Register)
 	router.Post("/login", controllers.Login)
-	router.Get("/authorize", controllers.Authorize)
+	router.Post("/authorize", controllers.Authorize)
 
 	fmt.Println("Listening and serving on port", cfg.ApiConfig.Port)
 	http.ListenAndServe(fmt.Sprintf(":%s", cfg.ApiConfig.Port), router)
