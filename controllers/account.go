@@ -55,13 +55,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.SetCookie(w, &http.Cookie{
-		Name:     "username",
-		Value:    account.Username,
-		Expires:  time.Now().Add(TOKEN_EXPIRATION_HOURS * time.Hour),
-		HttpOnly: true,
-	})
-
-	http.SetCookie(w, &http.Cookie{
 		Name:     "session_token",
 		Value:    account.SessionToken.String,
 		Expires:  time.Now().Add(TOKEN_EXPIRATION_HOURS * time.Hour),
