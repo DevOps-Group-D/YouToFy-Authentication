@@ -3,7 +3,8 @@ name: Deploy to AWS EC2
 on:
   workflow_run:
     workflows: ["Build and Publish to Dockerhub"]
-    types: [completed]
+    types: 
+      - completed
 
 env:
   AWS_REGION: ${{ secrets.AWS_REGION }}
