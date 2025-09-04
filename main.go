@@ -44,7 +44,7 @@ func main() {
 	router.Post("/register", controllers.Register)
 	router.Post("/login", controllers.Login)
 	router.Post("/authorize", controllers.Authorize)
-	//
+
 	fmt.Println("Listening and serving on port", cfg.ApiConfig.Port)
 	if err := http.ListenAndServe(fmt.Sprintf(":%s", cfg.ApiConfig.Port), router); err != nil {
 		fmt.Println(err)
