@@ -8,6 +8,8 @@ import (
 	"github.com/DevOps-Group-D/YouToFy-Authentication/controllers"
 	"github.com/DevOps-Group-D/YouToFy-Authentication/database"
 	"github.com/go-chi/chi"
+	chimiddleware "github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/joho/godotenv"
@@ -28,6 +30,14 @@ func main() {
 
 	// Listening and serving service
 	router := chi.NewRouter()
+	router.Use(chimiddleware.Logger)
+	router.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		AllowCredentials: true,
+		MaxAge:           300, // Maximum value not ignored by any of major browsers
+	}))
 
 	// Registering controllers
 	router.Post("/register", controllers.Register)
@@ -35,5 +45,7 @@ func main() {
 	router.Post("/authorize", controllers.Authorize)
 
 	fmt.Println("Listening and serving on port", cfg.ApiConfig.Port)
-	http.ListenAndServe(fmt.Sprintf(":%s", cfg.ApiConfig.Port), router)
+	if err := http.ListenAndServe(fmt.Sprintf(":%s", cfg.ApiConfig.Port), router); err != nil {
+		fmt.Println(err)
+	}
 }
