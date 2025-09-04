@@ -30,7 +30,7 @@ func main() {
 	router := chi.NewRouter()
 
 	// Registering controllers
-	router.Put("/register", controllers.Register)
+	router.Post("/register", controllers.Register)
 	router.Post("/login", controllers.Login)
 	router.Post("/authorize", controllers.Authorize)
 
