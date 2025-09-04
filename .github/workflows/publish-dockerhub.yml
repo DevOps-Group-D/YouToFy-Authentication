@@ -1,13 +1,8 @@
-name: Dockerhub
+name: Publish to Dockerhub
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Docker image tag to build and push'
-        required: true
-        default: 'latest'
-        type: string
+  release:
+    types: [published]
 
 jobs:
   build-and-publish:
