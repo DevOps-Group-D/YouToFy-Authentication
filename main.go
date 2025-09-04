@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/DevOps-Group-D/YouToFy-Authentication/configs"
@@ -18,7 +17,7 @@ func main() {
 	// Reading .env variables
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
+		fmt.Printf("Error loading .env file: %v\n", err)
 	}
 
 	// Initializing configs
