@@ -19,3 +19,6 @@ full-stop:
 args?=./...
 test:
 	go test $(args)
+
+build:
+	go build -o youtofy-authentication .
