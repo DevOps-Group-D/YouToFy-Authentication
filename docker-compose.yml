@@ -31,18 +31,16 @@ services:
       postgres:
         condition: service_healthy
 
-  backend:
-    container_name: backend
+  authentication:
+    container_name: authentication
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     environment:
       - DATABASE_URL=${BACKEND_DATABASE_URL}
-      - PORT=${BACKEND_PORT}
-    volumes:
-      - .:/app
+      - PORT=${AUTHENTICATION_PORT}
     ports:
-      - ${BACKEND_PORT}:${BACKEND_PORT}
+      - ${AUTHENTICATION_PORT}:${AUTHENTICATION_PORT}
     depends_on:
       postgres:
         condition: service_healthy

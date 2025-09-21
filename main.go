@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/DevOps-Group-D/YouToFy-Authentication/configs"
 	"github.com/DevOps-Group-D/YouToFy-Authentication/controllers"
@@ -16,6 +17,12 @@ import (
 )
 
 func main() {
+	// Reading args from cli
+	port := "0"
+	if len(os.Args) > 1 {
+		port = os.Args[1]
+	}
+
 	// Reading .env variables
 	err := godotenv.Load()
 	if err != nil {
@@ -24,6 +31,9 @@ func main() {
 
 	// Initializing configs
 	cfg := configs.LoadConfig()
+	if port != "0" {
+		cfg.ApiConfig.Port = port
+	}
 
 	// Running migrations
 	database.RunMigrations(cfg.DBConfig.Url)
