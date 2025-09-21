@@ -1,27 +1,34 @@
-name: Deploy EC2
+name: Deploy to AWS EC2
 
 on:
   workflow_run:
-    workflows: [Build]
-    types: [completed]
+    workflows: ["Build and Publish to Dockerhub"]
+    types: 
+      - completed
+  workflow_dispatch:
 
 env:
   AWS_REGION: ${{ secrets.AWS_REGION }}
   ECS_SERVICE: ${{ secrets.AWS_ECS_SERVICE }}
   ECS_CLUSTER: ${{ secrets.AWS_ECS_CLUSTER }}
   ECS_TASK_DEFINITION: .aws/task-definition.json
-  CONTAINER_NAME: YouToFy-Authentication
+  CONTAINER_NAME: YouToFyAuthentication
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     environment: production
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -36,6 +43,16 @@ jobs:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.CONTAINER_NAME }}
         image: ${{ secrets.DOCKER_HUB_USERNAME }}/youtofy-authentication:${{ github.event.release.name }}
+        environment-variables: |
+            POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+            PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }}
+            PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }}
+            PGADMIN_PORT=${{ secrets.PGADMIN_PORT }}
+            BACKEND_DATABASE_URL=${{ secrets.BACKEND_DATABASE_URL }}
+            BACKEND_PORT=${{ secrets.BACKEND_PORT }}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
