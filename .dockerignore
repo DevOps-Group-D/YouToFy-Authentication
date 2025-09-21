@@ -1,5 +1,4 @@
 .git
-Dockerfile.dev
 .dockerignore
 .gitignore
 .github
