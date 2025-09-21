@@ -55,16 +55,18 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.SetCookie(w, &http.Cookie{
-		Name:     "username",
-		Value:    account.Username,
+		Name:     "session_token",
+		Value:    account.SessionToken.String,
 		Expires:  time.Now().Add(TOKEN_EXPIRATION_HOURS * time.Hour),
+		Path:     "/",
 		HttpOnly: true,
 	})
 
 	http.SetCookie(w, &http.Cookie{
-		Name:     "session_token",
-		Value:    account.SessionToken.String,
+		Name:     "username",
+		Value:    account.Username,
 		Expires:  time.Now().Add(TOKEN_EXPIRATION_HOURS * time.Hour),
+		Path:     "/",
 		HttpOnly: true,
 	})
 
@@ -72,6 +74,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Name:     "X-CSRF-Token",
 		Value:    account.CsrfToken.String,
 		Expires:  time.Now().Add(TOKEN_EXPIRATION_HOURS * time.Hour),
+		Path:     "/",
 		HttpOnly: false,
 	})
 
