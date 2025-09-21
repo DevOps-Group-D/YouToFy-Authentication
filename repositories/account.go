@@ -8,6 +8,7 @@ import (
 const (
 	INSERT_ACCOUNT_QUERY = `INSERT INTO account (username, password) VALUES ($1, $2)`
 	INSERT_SPOTIFY_QUERY = `INSERT INTO spotify (account_username) VALUES ($1)`
+	INSERT_YOUTUBE_QUERY = `INSERT INTO youtube (account_username) VALUES ($1)`
 	SELECT_QUERY         = `SELECT * FROM account WHERE username = $1`
 	UPDATE_QUERY         = `UPDATE account SET password = $2, session_token = $3, csrf_token = $4 WHERE username = $1`
 )
@@ -25,6 +26,11 @@ func Insert(username string, password string) error {
 	}
 
 	row = conn.QueryRow(INSERT_SPOTIFY_QUERY, username)
+	if row.Err() != nil {
+		return row.Err()
+	}
+
+	row = conn.QueryRow(INSERT_YOUTUBE_QUERY, username)
 	if row.Err() != nil {
 		return row.Err()
 	}
