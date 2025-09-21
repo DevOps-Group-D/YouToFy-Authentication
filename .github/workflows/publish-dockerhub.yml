@@ -1,4 +1,4 @@
-name: Build and Publish to Dockerhub
+name: Publish to Dockerhub
 
 on:
   release:
