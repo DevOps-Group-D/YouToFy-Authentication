@@ -35,7 +35,7 @@ services:
     container_name: authentication
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     environment:
       - DATABASE_URL=${BACKEND_DATABASE_URL}
       - PORT=${AUTHENTICATION_PORT}
