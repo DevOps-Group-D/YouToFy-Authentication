@@ -41,6 +41,8 @@ services:
       - PORT=${AUTHENTICATION_PORT}
     ports:
       - ${AUTHENTICATION_PORT}:${AUTHENTICATION_PORT}
+    volumes:
+      - .:/app
     depends_on:
       postgres:
         condition: service_healthy
